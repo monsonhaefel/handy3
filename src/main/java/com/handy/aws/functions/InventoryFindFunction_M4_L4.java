@@ -10,13 +10,13 @@ public class InventoryFindFunction_M4_L4 implements RequestHandler<Object, Strin
     
  	@Override
     public String handleRequest(Object input, Context context) {
-        return getProductById(0).toString();
+        return getProductById(101).toString();
     }
     
     private Product getProductById(Integer productId) {
-    	
+    	    	
     	Integer index = productId - 100;
-    	
+    	    	
     	if(index < 0 && index > 2) { return null;}
     	
     	if(products == null) {
@@ -27,6 +27,6 @@ public class InventoryFindFunction_M4_L4 implements RequestHandler<Object, Strin
     	}
     	
     	
-    	return products[productId];
+    	return products[index];
     }
 }
