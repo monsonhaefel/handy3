@@ -50,6 +50,6 @@ public class InventoryFindFunction_M5_L2 implements RequestHandler<QuerystringRe
     	}
     	
     	
-    	return products[productId];
+    	return products[index];
     }
 }

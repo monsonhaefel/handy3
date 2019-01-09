@@ -10,8 +10,7 @@ public class InventoryFindFunction_M5_L4 implements RequestHandler<QuerystringRe
 
     @Override
     public ProductResponse handleRequest(QuerystringRequest request, Context context){
-        
-        
+                
         String ids = (String)request.queryStringParameters.getOrDefault("id", "-1");
         
         Integer idi = Integer.parseInt(ids);
@@ -39,6 +38,6 @@ public class InventoryFindFunction_M5_L4 implements RequestHandler<QuerystringRe
     	}
     	
     	
-    	return products[productId];
+    	return products[index];
     }
 }
