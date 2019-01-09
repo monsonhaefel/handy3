@@ -29,6 +29,7 @@ public class InventoryFindFunction_M7_L2 implements RequestHandler<QuerystringRe
         if(product != null){
             response.setBody(product);
         }
+        
         return response;
         
         
