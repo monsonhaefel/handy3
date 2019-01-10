@@ -36,8 +36,7 @@ public class InventoryFindFunction_M5_L4 implements RequestHandler<QuerystringRe
     		products[1] = new Product(101, "Hammer", "Wilton Bash", "24oz Ball Peen",          27);
     		products[2] = new Product(102, "Hammer", "DeWalt", "15oz MIG Weld",                17);
     	}
-    	
-    	
+
     	return products[index];
     }
 }

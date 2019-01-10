@@ -33,11 +33,12 @@ public class InventoryIncreaseFunction_M8_L2_A implements RequestHandler<Invento
     	
     	  
     	Map<String, String> env = System.getenv();
-    	String endpoint = env.get("RDS_INSTANCE_HOSTNAME");
-    	String port = env.get("RDS_INSTANCE_PORT");
-    	String dbName = env.get("DB_NAME");
+    	final String RDS_INSTANCE_PORT = env.get("RDS_INSTANCE_PORT");
+    	final String RDS_DB_NAME = env.get("RDS_DB_NAME");
+    	final String RDS_INSTANCE_HOSTNAME = env.get("RDS_INSTANCE_HOSTNAME");
+    	
+        final String JDBC_URL = "jdbc:mysql://" + RDS_INSTANCE_HOSTNAME + ":" + RDS_INSTANCE_PORT + "/"+RDS_DB_NAME;
         
-        final String JDBC_URL = "jdbc:mysql://" + endpoint + ":" + port + "/"+dbName;
 
         try {
             
@@ -68,21 +69,16 @@ public class InventoryIncreaseFunction_M8_L2_A implements RequestHandler<Invento
         return true;
     }
     
-    // IM NOT SURE THIS IS EVEN NEEDED. TEST WITHOUT PROPERTIES TO SEE.
     private Properties getDBProperties() {
     	
+    	Map<String, String> env = System.getenv();
+    	String DB_USER = env.get("DB_USER");
+    	final String DB_PASS = env.get("DB_PASS");
 
-        final String REGION_NAME = "us-east-1";
-        final String DB_USER = "masteruser";
-        final String DB_PASS = "12345678";
-        final String DB_NAME = "handydev";
-         
     	java.util.Properties props = new java.util.Properties();
         props.put("user",DB_USER);
         props.put("password", DB_PASS);
-        props.put("db_name", DB_NAME);
-        props.put("name", DB_NAME);
-        props.put("region_name", REGION_NAME);
+        
         return props;
     }
 

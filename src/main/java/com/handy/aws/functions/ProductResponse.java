@@ -10,7 +10,6 @@ import com.handy.aws.domain.Product;
 
 public class ProductResponse {
 	
-	//Change the type to String. The response should be returned to the API Gateway as a String.
 	private String body;
     
 	String statusCode = "200";
@@ -20,7 +19,12 @@ public class ProductResponse {
     Gson gson = new Gson(); 
     
     public ProductResponse() {
+    	super();
         this.headers.put("Content-Type","application/json");
+    }
+    public ProductResponse(String errorMsg) {
+    	this();
+    	this.body = errorMsg;
     }
     public ProductResponse(Product product) {
         this();
@@ -30,6 +34,10 @@ public class ProductResponse {
     }
 	public String getBody() {
 		return body;
+	}
+	// this is needed if the return is to be an error. 
+	public void setBody(String errorMsg) {
+		this.body = errorMsg;
 	}
 	public void setBody(Product product) {
 		// Serialize the Product object to JSON
