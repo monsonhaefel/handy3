@@ -8,7 +8,7 @@ import com.google.gson.Gson;
 import com.handy.aws.domain.Product;
 
 
-public class ProductResponse {
+public class HttpProductResponse {
 	
 	private String body;
     
@@ -18,15 +18,15 @@ public class ProductResponse {
     // Using the Gson class and instruct a Gson instance
     Gson gson = new Gson(); 
     
-    public ProductResponse() {
+    public HttpProductResponse() {
     	super();
         this.headers.put("Content-Type","application/json");
     }
-    public ProductResponse(String errorMsg) {
+    public HttpProductResponse(String errorMsg) {
     	this();
     	this.body = errorMsg;
     }
-    public ProductResponse(Product product) {
+    public HttpProductResponse(Product product) {
         this();
         // Serialize the Product object to JSON
         this.body = gson.toJson(product);

@@ -14,14 +14,14 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import com.handy.aws.domain.Product;
 
-public class InventoryFindFunction_M8_L1 implements RequestHandler<QuerystringRequest, ProductListResponse>{  
+public class InventoryFindFunction_M8_L1 implements RequestHandler<HttpQuerystringRequest, HttpProductListResponse>{  
 
 	@Override
-	public ProductListResponse handleRequest(QuerystringRequest request, Context context){
+	public HttpProductListResponse handleRequest(HttpQuerystringRequest request, Context context){
 
 		String ids = (String)request.queryStringParameters.getOrDefault("id", "-1");
 
-		ProductListResponse response = new ProductListResponse();
+		HttpProductListResponse response = new HttpProductListResponse();
 
 		if(ids.equalsIgnoreCase("All")) {
 

@@ -12,26 +12,27 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.handy.aws.domain.Product;
 
-public class InventoryIncreaseFunction_M8_L2_A implements RequestHandler<InventoryIncreaseRequest, InventoryUpdateResponse> {
+public class InventoryInsertFunction_M8_L2_HttpSuccessResponse implements RequestHandler<HttpInsertProductsRequest, HttpSuccessResponse> {
 
 	
     @Override
-    public InventoryUpdateResponse handleRequest(InventoryIncreaseRequest request, Context context) {
+    public HttpSuccessResponse handleRequest(HttpInsertProductsRequest request, Context context) {
     	
-    	List<Product> products = request.getBody();
+    	List<Product> products = request.getProducts();
+    	
+    	boolean success = insertInventory(products, context);
         
-        boolean success = increaseInventory(products, context);
-        
-        if(success) {
-        	return new InventoryUpdateResponse(400,products);
+    	if(!success) {
+        	HttpSuccessResponse response = new HttpSuccessResponse(false);
+        	response.setStatusCode("400");
+        	return response;
         }else {
-        	return new InventoryUpdateResponse();
+        	return new HttpSuccessResponse(true);
         }
     }
 	
-    public boolean increaseInventory(List<Product> products, Context context) {
+    public boolean insertInventory(List<Product> products, Context context) {
     	
-    	  
     	Map<String, String> env = System.getenv();
     	final String RDS_INSTANCE_PORT = env.get("RDS_INSTANCE_PORT");
     	final String RDS_DB_NAME = env.get("RDS_DB_NAME");
@@ -39,33 +40,38 @@ public class InventoryIncreaseFunction_M8_L2_A implements RequestHandler<Invento
     	
         final String JDBC_URL = "jdbc:mysql://" + RDS_INSTANCE_HOSTNAME + ":" + RDS_INSTANCE_PORT + "/"+RDS_DB_NAME;
         
-
-        try {
+    	try {
             
-        	// NOTE: getDBProperties() MAY NOT BE NEEDED. TEST WITHOUT.
             Connection con = DriverManager.getConnection(JDBC_URL, getDBProperties());
             
-            con.setAutoCommit(false);
+        	con.setAutoCommit(false);
             PreparedStatement preparedStatement = 
-            		con.prepareStatement("UPDATE HandyDev.inventory SET count = count + ? WHERE product_id = ?");
+            		con.prepareStatement(
+            				"INSERT INTO HandyDev.inventory (tool_type, brand, name, count) \n" + 
+            				"VALUES (?, ?, ?, ?);");
+       	
             try { 
             	for (Product product : products) {
-            		preparedStatement.setInt(1, product.getCount());
-            		preparedStatement.setInt(2, product.getProduct_id());
+            		preparedStatement.setString(1, product.getToolType());
+            		preparedStatement.setString(2, product.getBrand());
+            		preparedStatement.setString(3, product.getName());
+            		preparedStatement.setInt(4, product.getCount());
             		preparedStatement.execute();
             	};
 
             } catch (SQLException e) {
             	context.getLogger().log("JDBC exception: " + e.toString());
             	con.rollback();
+
             	return false;
             }
-            con.commit();
+        	con.commit();
             
         }catch(SQLException e) {
             context.getLogger().log("JDBC exception: " + e.toString());
-            return false;
+        	return false;
         }
+
         return true;
     }
     

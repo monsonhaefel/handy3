@@ -3,16 +3,16 @@ package com.handy.aws.functions;
 import java.util.Map;
 import java.util.HashMap;
 
-public class HtmlResponse {
+public class HttpHtmlResponse {
     
     String statusCode = "200";
     Map<String, String> headers = new HashMap<String, String>();
     String body;
     
-    public HtmlResponse() {
+    public HttpHtmlResponse() {
         this.headers.put("Content-Type","text/html");
     }
-    public HtmlResponse(String bodyText) {
+    public HttpHtmlResponse(String bodyText) {
         this();
         this.body = bodyText;
         

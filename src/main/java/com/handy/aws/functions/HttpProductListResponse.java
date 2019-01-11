@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.handy.aws.domain.Product;
 
-public class ProductListResponse {
+public class HttpProductListResponse {
 
 	private String body;
     
@@ -18,15 +18,15 @@ public class ProductListResponse {
     // Using the Gson class and instruct a Gson instance
     Gson gson = new Gson(); 
 
-	public ProductListResponse() {
+	public HttpProductListResponse() {
 		super();
         this.headers.put("Content-Type","application/json");
 	}
-	public ProductListResponse(String errorMsg) {
+	public HttpProductListResponse(String errorMsg) {
 		this();
 		this.body = errorMsg;
 	}
-	public ProductListResponse(List<Product> products) {
+	public HttpProductListResponse(List<Product> products) {
 		this();
 		this.body = gson.toJson(products);
 	}
@@ -38,6 +38,12 @@ public class ProductListResponse {
 	}
 	public void setBody(String errorMsg) {
 		this.body = errorMsg;
+	}
+	public String getStatusCode() {
+		return statusCode;
+	}
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
 
 }

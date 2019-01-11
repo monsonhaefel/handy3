@@ -5,12 +5,12 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import com.handy.aws.domain.Product;
 
-public class InventoryFindFunction_M5_L3 implements RequestHandler<QuerystringRequest, HtmlResponse>{  
+public class InventoryFindFunction_M5_L3 implements RequestHandler<HttpQuerystringRequest, HttpHtmlResponse>{  
     
 	private Product [] products;
 	
     @Override
-    public HtmlResponse handleRequest(QuerystringRequest request, Context context){
+    public HttpHtmlResponse handleRequest(HttpQuerystringRequest request, Context context){
         
         
         String ids = (String)request.queryStringParameters.getOrDefault("id", "-1");
@@ -35,11 +35,11 @@ public class InventoryFindFunction_M5_L3 implements RequestHandler<QuerystringRe
             				+ "</table>"
             			+ "</body>"
         			+ "</html>";
-            return new HtmlResponse(htmlText);
+            return new HttpHtmlResponse(htmlText);
             
         }else {
         
-        	HtmlResponse response = new HtmlResponse();
+        	HttpHtmlResponse response = new HttpHtmlResponse();
             response.statusCode = "400";
             return response;
         }

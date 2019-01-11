@@ -7,12 +7,12 @@ import com.handy.aws.domain.Product;
 
 
 
-public class InventoryFindFunction_M5_L2 implements RequestHandler<QuerystringRequest, StringResponse>{  
+public class InventoryFindFunction_M5_L2 implements RequestHandler<HttpQuerystringRequest, StringResponse>{  
     
 	private Product [] products;
     
     @Override
-    public StringResponse handleRequest(QuerystringRequest request, Context context){
+    public StringResponse handleRequest(HttpQuerystringRequest request, Context context){
         
         
         String ids = (String)request.queryStringParameters.getOrDefault("id", "-1");

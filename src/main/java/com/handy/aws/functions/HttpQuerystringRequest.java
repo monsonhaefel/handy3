@@ -2,7 +2,7 @@ package com.handy.aws.functions;
 
 import java.util.Map;
 
-public class QuerystringRequest {
+public class HttpQuerystringRequest {
     
     Map<String, String> queryStringParameters;
     

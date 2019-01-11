@@ -4,12 +4,12 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.handy.aws.domain.Product;
 
-public class InventoryFindFunction_M5_L4 implements RequestHandler<QuerystringRequest, ProductResponse>{  
+public class InventoryFindFunction_M5_L4 implements RequestHandler<HttpQuerystringRequest, HttpProductResponse>{  
         
 	private Product [] products;
 
     @Override
-    public ProductResponse handleRequest(QuerystringRequest request, Context context){
+    public HttpProductResponse handleRequest(HttpQuerystringRequest request, Context context){
                 
         String ids = (String)request.queryStringParameters.getOrDefault("id", "-1");
         
@@ -17,7 +17,7 @@ public class InventoryFindFunction_M5_L4 implements RequestHandler<QuerystringRe
         
         Product product = getProductById(idi, context);
         
-        ProductResponse response = new ProductResponse();
+        HttpProductResponse response = new HttpProductResponse();
         
         if(product != null){
             response.setBody(product);
