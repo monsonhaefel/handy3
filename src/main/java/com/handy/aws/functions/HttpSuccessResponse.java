@@ -15,7 +15,7 @@ public class HttpSuccessResponse {
     }
     public HttpSuccessResponse(boolean success) {
         this();
-        this.setSuccess(success);
+        this.body = success ? "SUCCESS" : "FAILED";
         
     }
     public String getBody() {
@@ -23,14 +23,6 @@ public class HttpSuccessResponse {
     }
     public void setBody(String body) {
         this.body = body;
-    }
-    public void setSuccess(Boolean success) {
-    	this.body = success ? "SUCCESS" : "FAILED";
-    }
-    public Boolean getSuccess() {
-    	
-    	if(this.body == null) { return false;}
-    	return this.body.equalsIgnoreCase("SUCCESS") ? true : false;
     }
     public String getStatusCode() {
         return statusCode;
